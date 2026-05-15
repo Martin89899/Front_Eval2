@@ -17,13 +17,17 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Desplegando Frontend..."
-            # 1. Entrar a la carpeta (Asegúrate que el nombre sea exacto)
-            cd Front_EVAL2 || git clone https://github.com/tu-usuario/Front_EVAL2.git
-            cd Front_EVAL2
+            echo "Iniciando despliegue..."
+            # 1. Instalar Git si no existe (por seguridad)
+            sudo dnf install git -y
             
-            # 2. Actualizar el código
+            # 2. Clonar el repo si no existe, o actualizar si ya está
+            if [ ! -d "Front_EVAL2" ]; then
+              git clone https://github.com/Martin89899/Front_EVAL2.git
+            fi
+            
+            cd Front_EVAL2
             git pull origin main
             
-            # 3. Levantar con Docker (esto borra lo viejo y crea lo nuevo)
-            docker compose up -d --build
+            # 3. Levantar con Docker (Corregido para Amazon Linux 2023)
+            sudo docker compose up -d --build
