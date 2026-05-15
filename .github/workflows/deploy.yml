@@ -1,0 +1,24 @@
+name: Deploy Frontend
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Conectado al servidor AWS - Desplegando Frontend"
+            # Mañana aquí agregaremos los comandos para:
+            # 1. Detener el contenedor viejo
+            # 2. Bajar la imagen nueva
+            # 3. Correr el contenedor nuevo
