@@ -18,16 +18,12 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Iniciando despliegue..."
-            # 1. Instalar Git si no existe (por seguridad)
-            sudo dnf install git -y
-            
-            # 2. Clonar el repo si no existe, o actualizar si ya está
-            if [ ! -d "Front_EVAL2" ]; then
-              git clone https://github.com/Martin89899/Front_EVAL2.git
-            fi
-            
+            # 1. Entrar a la carpeta
             cd Front_EVAL2
+            
+            # 2. Actualizar código
             git pull origin main
             
-            # 3. Levantar con Docker (Corregido para Amazon Linux 2023)
+            # 3. Levantar con el comando correcto de Amazon Linux 2023
+            sudo docker compose down || true
             sudo docker compose up -d --build
