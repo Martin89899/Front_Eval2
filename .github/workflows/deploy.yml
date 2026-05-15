@@ -1,4 +1,5 @@
 name: Deploy Frontend
+
 on:
   push:
     branches: [ "main" ]
@@ -17,13 +18,36 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+<<<<<<< HEAD
             echo "Iniciando despliegue..."
             # 1. Entrar a la carpeta
             cd Front_EVAL2
             
             # 2. Actualizar código
-            git pull origin main
+=======
+            echo "Iniciando despliegue de Frontend..."
             
+            # 1. Navegar a la carpeta del usuario y entrar al proyecto
+            # Si la carpeta no existe, la clona
+            cd ~
+            if [ ! -d "Front_EVAL2" ]; then
+              git clone https://github.com/Martin89899/Front_EVAL2.git
+            fi
+            cd Front_EVAL2
+
+            # 2. Actualizar el código desde el repositorio
+>>>>>>> b88a4d4 (Despliegue final con Docker)
+            git pull origin main
+
+            # 3. Reiniciar los contenedores
+            # Usamos la ruta completa al binario que instalamos para evitar errores de "command not found"
+            sudo /usr/local/bin/docker-compose down || true
+            sudo /usr/local/bin/docker-compose up -d --build
+            
+<<<<<<< HEAD
             # 3. Levantar con el comando correcto de Amazon Linux 2023
             sudo docker compose down || true
             sudo docker-compose up -d --build
+=======
+            echo "¡Despliegue completado con éxito!"
+>>>>>>> b88a4d4 (Despliegue final con Docker)
