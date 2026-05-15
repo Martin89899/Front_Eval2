@@ -26,4 +26,4 @@ jobs:
             
             # 3. Levantar con el comando correcto de Amazon Linux 2023
             sudo docker compose down || true
-            sudo docker compose up -d --build
+            sudo docker-compose up -d --build
