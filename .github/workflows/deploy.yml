@@ -17,8 +17,13 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Conectado al servidor AWS - Desplegando Frontend"
-            # Mañana aquí agregaremos los comandos para:
-            # 1. Detener el contenedor viejo
-            # 2. Bajar la imagen nueva
-            # 3. Correr el contenedor nuevo
+            echo "Desplegando Frontend..."
+            # 1. Entrar a la carpeta (Asegúrate que el nombre sea exacto)
+            cd Front_EVAL2 || git clone https://github.com/tu-usuario/Front_EVAL2.git
+            cd Front_EVAL2
+            
+            # 2. Actualizar el código
+            git pull origin main
+            
+            # 3. Levantar con Docker (esto borra lo viejo y crea lo nuevo)
+            docker compose up -d --build
